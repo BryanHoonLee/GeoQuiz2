@@ -8,6 +8,7 @@
 
     <!-- Toasts -->
     <string name="correct_toast">Correct!</string>
+    <string name="false_toast">False</string>
 
     <!-- Questions -->
     <string name ="question_australia">Canberra is the capital of Australia.</string>

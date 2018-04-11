@@ -39,21 +39,49 @@ public class MainActivity extends AppCompatActivity {
         mFalseButton = (Button) findViewById(R.id.falseButton);
 
         mQuestionTextView = (TextView) findViewById(R.id.questionTextView);
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
+
+        mNextButton = (Button) findViewById(R.id.nextButton);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+            }
+        });
 
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Clicked True", Toast.LENGTH_SHORT).show();
+                checkAnswer(true);
             }
         });
 
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Clicked False", Toast.LENGTH_SHORT).show();
+                checkAnswer(false);
             }
         });
+
+        updateQuestion();
+    }
+
+    public void updateQuestion(){
+        int question = mQuestionBank[mCurrentIndex].getTextResId();
+        mQuestionTextView.setText(question);
+    }
+
+    public void checkAnswer(boolean userPressedTrue){
+        boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+
+        int messageResId = 0;
+
+        if(userPressedTrue == answerIsTrue){
+            messageResId = R.string.correct_toast;
+        }else {
+            messageResId = R.string.false_toast;
+        }
+
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 }
