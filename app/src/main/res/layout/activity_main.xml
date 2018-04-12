@@ -36,13 +36,31 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/nextButton"
-        android:text="@string/next_button"
-        android:layout_below="@+id/relLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_below="@id/relLayout1"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/prevButton"
+            android:text="@string/prev_button"
+            android:drawableLeft="@drawable/ic_prev"
+            android:drawablePadding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:text="@string/next_button"
+            android:drawableRight="@drawable/ic_next"
+            android:drawablePadding="10dp"
+            android:layout_toEndOf="@id/prevButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>
