@@ -1,5 +1,6 @@
 package hoonstudio.com.geoquiz;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,16 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private static final String KEY_INDEX = "index";
 
     //Buttons
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
     private Button mPrevButton;
+
+    //Toasts
+    private Toast mCurrentToast;
 
     //TextViews
     private TextView mQuestionTextView;
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: called");
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
 
         mTrueButton = (Button) findViewById(R.id.trueButton);
         mFalseButton = (Button) findViewById(R.id.falseButton);
@@ -112,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+    @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: called");
@@ -128,17 +143,33 @@ public class MainActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
     }
 
+    public void showToast(int text){
+        if(mCurrentToast != null){
+            mCurrentToast.cancel();
+        }
+        mCurrentToast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
     public void checkAnswer(boolean userPressedTrue){
+        final Handler handler = new Handler();
+
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
         int messageResId = 0;
 
         if(userPressedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                    updateQuestion();
+                }
+            }, 1000);
         }else {
             messageResId = R.string.false_toast;
         }
 
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        showToast(messageResId);
     }
 }
