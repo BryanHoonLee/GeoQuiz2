@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final String KEY_INDEX = "index";
+    private static final int DURATION = 1000;
 
     //Buttons
     private Button mTrueButton;
@@ -21,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private Button mPrevButton;
 
     //Toasts
-    private Toast mCurrentToast;
+    private Toast mCurrentToast = null;
 
     //TextViews
     private TextView mQuestionTextView;
+    private TextView mCorrectOrFalseTextView;
+    private TextView mCurrentIndexTextView;
 
     //Questions
     //In more complex projects, this array would be created and stored elsewhere.
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int mScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +59,8 @@ public class MainActivity extends AppCompatActivity {
         mPrevButton = (Button) findViewById(R.id.prevButton);
 
         mQuestionTextView = (TextView) findViewById(R.id.questionTextView);
-
-        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                updateQuestion();
-            }
-        });
+        mCurrentIndexTextView = (TextView) findViewById(R.id.currentIndexTextView);
+        mCorrectOrFalseTextView = (TextView) findViewById(R.id.correctOrFalseTextView);
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,36 +138,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateQuestion(){
         int question = mQuestionBank[mCurrentIndex].getTextResId();
+        mCurrentIndexTextView.setText(Integer.toString(mCurrentIndex + 1));
+        mCurrentIndexTextView.append(") ");
         mQuestionTextView.setText(question);
     }
 
-    public void showToast(int text){
-        if(mCurrentToast != null){
-            mCurrentToast.cancel();
-        }
-        mCurrentToast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    public void disableButtons(){
+        mTrueButton.setEnabled(false);
+        mFalseButton.setEnabled(false);
+        mNextButton.setEnabled(false);
+        mPrevButton.setEnabled(false);
+    }
+
+    public void enableButtons(){
+        mTrueButton.setEnabled(true);
+        mFalseButton.setEnabled(true);
+        mNextButton.setEnabled(true);
+        mPrevButton.setEnabled(true);
     }
 
     public void checkAnswer(boolean userPressedTrue){
         final Handler handler = new Handler();
-
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
-        int messageResId = 0;
-
         if(userPressedTrue == answerIsTrue){
-            messageResId = R.string.correct_toast;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                     updateQuestion();
                 }
-            }, 1000);
+            }, DURATION);
         }else {
-            messageResId = R.string.false_toast;
-        }
 
-        showToast(messageResId);
+        }
     }
 }
