@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hoonstudio.com.geoquiz.MainActivity">
+
+    <TextView
+        android:id="@+id/questionTextView"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/question_australia"
+        android:padding="24dp"
+        android:layout_marginTop="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/relLayout1"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/trueButton"
+            android:text="@string/true_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/falseButton"
+            android:layout_toEndOf="@+id/trueButton"
+            android:text="@string/false_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/prevButton"
+        android:text="@string/prev_button"
+        android:drawableLeft="@drawable/ic_prev"
+        android:drawablePadding="10dp"
+        android:layout_gravity="bottom|start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:text="@string/next_button"
+        android:drawableRight="@drawable/ic_next"
+        android:drawablePadding="10dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+</FrameLayout>
