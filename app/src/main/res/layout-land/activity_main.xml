@@ -7,6 +7,12 @@
     tools:context="hoonstudio.com.geoquiz.MainActivity">
 
     <TextView
+        android:id="@+id/currentIndexTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/questionTextView"
         android:layout_gravity="center_horizontal"
         android:text="@string/question_australia"
@@ -36,6 +42,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/cheatButton"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@color/colorAccent"
+        android:text="@string/cheat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/prevButton"

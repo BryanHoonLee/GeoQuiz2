@@ -8,10 +8,20 @@ public class Question {
 
     private int mTextResId;
     private boolean mAnswerTrue;
+    private boolean mIsCheater;
 
-    public Question(int textResId, boolean answerTrue){
+    public Question(int textResId, boolean answerTrue, boolean isCheater){
         mTextResId = textResId;
         mAnswerTrue = answerTrue;
+        mIsCheater = isCheater;
+    }
+
+    public boolean isCheater() {
+        return mIsCheater;
+    }
+
+    public void setCheater(boolean cheater) {
+        mIsCheater = cheater;
     }
 
     public int getTextResId() {
